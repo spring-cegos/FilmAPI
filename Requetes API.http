@@ -1,0 +1,39 @@
+### On récupère la liste des films
+GET http://localhost:8080/films
+
+### On crée un film avec date dans le futur (cas d'erreur)
+POST http://localhost:8080/films
+Content-Type: application/json
+
+{ "titre" : "La grande vadrouille",
+  "genre" : "comédie",
+  "dateSortie" : "2966-01-01",
+  "duree" : 132,
+  "synopsis": "le film se déroule durant la Seconde Guerre mondiale dans la France occupée et raconte les déboires de deux Français se retrouvant obligés d'aider un petit groupe d'aviateurs britanniques à se rendre en zone libre"
+}
+
+### On crée un film (cas nominal)
+POST http://localhost:8080/films
+Content-Type: application/json
+
+{ "titre" : "La grande vadrouille",
+  "genre" : "comédie",
+  "dateSortie" : "1966-01-01",
+  "duree" : 132,
+  "synopsis": "le film se déroule durant la Seconde Guerre mondiale dans la France occupée et raconte les déboires de deux Français se retrouvant obligés d'aider un petit groupe d'aviateurs britanniques à se rendre en zone libre"
+}
+
+
+
+### On ajoute un avis au film d'id 2
+POST http://localhost:8080/films/2/avis
+Content-Type: application/json
+
+{
+  "note": 3,
+  "commentaire": "pas mal"
+
+}
+
+### On récupère les avis du film  : 2
+GET http://localhost:8080/films/2/avis
