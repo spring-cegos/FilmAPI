@@ -1,6 +1,7 @@
 package fr.cegos.filmapi.bo;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Past;
@@ -48,7 +49,8 @@ public class Film {
      */
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "film_id") // plutôt que d'avoir une table de jointure, je préfère rajouter une colonne film_id à mes avis
-    @JsonBackReference // Dans une relation bidirectionnelle afin d'éviter les boucles infinie de JSON, je définie quelle association je met en priorité et en secondaire(ici @JsonBackReference)
+    @JsonIgnore
+    // Dans une relation bidirectionnelle afin d'éviter les boucles infinie de JSON
     private List<Avis> avis = new ArrayList<>();
 
 }

@@ -32,7 +32,6 @@ public class Avis {
      */
     @ManyToOne // en fait j'ai envie d'avoir une association bidirectionnelle
     // afin d'accéder aux infos du film depuis un avis
-    @JsonManagedReference // pour éviter la boucle infinie dans le JSON, il faut définir quelle association je met en priorité @JsonManagedReference
     private Film film;
 
 }
