@@ -7,13 +7,14 @@ import fr.cegos.filmapi.bo.Film;
 import fr.cegos.filmapi.service.AvisService;
 import fr.cegos.filmapi.service.FilmService;
 import lombok.AllArgsConstructor;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-
+@Profile("dev")
 @Service
 @AllArgsConstructor
 public class AvisServiceDevImpl implements AvisService {

@@ -4,6 +4,7 @@ package fr.cegos.filmapi.service.impl;
 
 import fr.cegos.filmapi.bo.Film;
 import fr.cegos.filmapi.service.FilmService;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -14,6 +15,7 @@ import java.util.List;
  * Implémentation qui n'intéragit pas avec la base de donnée
  * => tout est stocké en mémoire Java
  */
+@Profile("dev")
 @Service
 public class FilmServiceDevImpl implements FilmService {
     // Dans cette implémentation c'est dans cette liste qu'on gère nos tâches

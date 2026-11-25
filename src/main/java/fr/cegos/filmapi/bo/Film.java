@@ -1,5 +1,6 @@
 package fr.cegos.filmapi.bo;
 
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Size;
@@ -15,7 +16,10 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Entity
 public class Film {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotEmpty
     private String titre;
@@ -38,7 +42,11 @@ public class Film {
 
     /**
      * Association vers la classe Avis
+     * Si jamais on supprime un film c'est Ok de supprimer les avis également
+     * => cascade = CascadeType.ALL)
      */
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "film_id") // plutôt que d'avoir une table de jointure, je préfère rajouter une colonne film_id à mes avis
     private List<Avis> avis = new ArrayList<>();
 
 }

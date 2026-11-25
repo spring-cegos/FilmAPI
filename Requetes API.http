@@ -23,7 +23,16 @@ Content-Type: application/json
   "synopsis": "le film se déroule durant la Seconde Guerre mondiale dans la France occupée et raconte les déboires de deux Français se retrouvant obligés d'aider un petit groupe d'aviateurs britanniques à se rendre en zone libre"
 }
 
+### On crée un deuxième film (cas nominal)
+POST http://localhost:8080/films
+Content-Type: application/json
 
+{ "titre" : "E.T.",
+  "genre" : "Science-Fiction",
+  "dateSortie" : "1982-06-11",
+  "duree" : 115,
+  "synopsis": "Une soucoupe volante atterrit en pleine nuit près de Los Angeles. Quelques extraterrestres, envoyés sur Terre en mission d'exploration botanique, sortent de l'engin, mais un des leurs s'aventure au-delà de la clairière où se trouve la navette."
+}
 
 ### On ajoute un avis au film d'id 2
 POST http://localhost:8080/films/2/avis
@@ -37,3 +46,7 @@ Content-Type: application/json
 
 ### On récupère les avis du film  : 2
 GET http://localhost:8080/films/2/avis
+
+
+### On supprime le film d'id : 2 (les avis correspondants doivent être supprimés également)
+DELETE http://localhost:8080/films/2
