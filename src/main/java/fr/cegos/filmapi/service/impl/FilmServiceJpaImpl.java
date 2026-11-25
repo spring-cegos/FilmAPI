@@ -30,8 +30,7 @@ public class FilmServiceJpaImpl implements FilmService {
 
     @Override
     public List<Film> searchFilms(String search) {
-        // todo : faire RECHERCHE et pas findAll()
-        return filmRepository.findAll();
+        return filmRepository.recherche(search);
     }
 
     @Override

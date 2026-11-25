@@ -64,4 +64,9 @@ public class AvisServiceDevImpl implements AvisService {
             }
         }
     }
+
+    @Override
+    public Avis getAvisById(Long id) {
+        return null;
+    }
 }

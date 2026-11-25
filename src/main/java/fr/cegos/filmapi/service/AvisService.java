@@ -11,4 +11,5 @@ public interface AvisService {
     List<Avis> searchAvis(Long idFilm, String search);
     void saveAvis(Long idFilm, Avis avis);
     void deleteAvis(Long id);
+    Avis getAvisById(Long id);
 }

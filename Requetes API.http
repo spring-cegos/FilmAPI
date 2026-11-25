@@ -34,8 +34,19 @@ Content-Type: application/json
   "synopsis": "Une soucoupe volante atterrit en pleine nuit près de Los Angeles. Quelques extraterrestres, envoyés sur Terre en mission d'exploration botanique, sortent de l'engin, mais un des leurs s'aventure au-delà de la clairière où se trouve la navette."
 }
 
-### On ajoute un avis au film d'id 2
-POST http://localhost:8080/films/2/avis
+### On crée un troisème film (cas nominal)
+POST http://localhost:8080/films
+Content-Type: application/json
+
+{ "titre" : "Le seigneur des anneaux : la communautée de l'anneau",
+  "genre" : "Fantastique",
+  "dateSortie" : "2001-12-19",
+  "duree" : 178,
+  "synopsis": "Dans ce chapitre de la trilogie, le jeune et timide Hobbit, Frodon Sacquet, hérite d'un anneau. Bien loin d'être une simple babiole, il s'agit de l'Anneau Unique."
+}
+
+### On ajoute un avis au film d'id 3
+POST http://localhost:8080/films/3/avis
 Content-Type: application/json
 
 {
@@ -44,9 +55,25 @@ Content-Type: application/json
 
 }
 
+### On ajoute un avis au film d'id 4
+POST http://localhost:8080/films/4/avis
+Content-Type: application/json
+
+{
+  "note": 5,
+  "commentaire": "meilleur film de tous les temps"
+}
+
 ### On récupère les avis du film  : 2
 GET http://localhost:8080/films/2/avis
+
+### On récupère l'avis  : 3
+GET http://localhost:8080/films/2/avis/3
 
 
 ### On supprime le film d'id : 2 (les avis correspondants doivent être supprimés également)
 DELETE http://localhost:8080/films/2
+
+
+### recherche sur le titre, el genre, le synopsis et les avis
+GET http://localhost:8080/films?search=médie

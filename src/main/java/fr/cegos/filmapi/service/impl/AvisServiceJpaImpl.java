@@ -50,4 +50,9 @@ public class AvisServiceJpaImpl implements AvisService {
     public void deleteAvis(Long id) {
         avisRepository.deleteById(id);
     }
+
+    @Override
+    public Avis getAvisById(Long id) {
+        return avisRepository.findById(id).orElse(null);
+    }
 }

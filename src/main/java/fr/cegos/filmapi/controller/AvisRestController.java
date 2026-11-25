@@ -40,6 +40,12 @@ public class AvisRestController {
         }
     }
 
+    @GetMapping("/{avisId}")
+    @Operation(summary = "voir un avis spécifique")
+    public Avis getAvis(@PathVariable Long avisId){
+        return avisService.getAvisById(avisId);
+    }
+
     /**
      * @RequestBody : permet d'affecter les attributs de l'argument Film avec les attributs JSON de la requête HTTP
      * Si on ouble cette annotation, on va avoir un objet Film vide
