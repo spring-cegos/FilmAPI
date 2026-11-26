@@ -5,8 +5,10 @@ import fr.cegos.filmapi.bo.Film;
 import fr.cegos.filmapi.service.FilmService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -44,6 +46,7 @@ public class FilmRestController {
      * Si on ouble cette annotation, on va avoir un objet Film vide
      * Si besoin de récupérer un fichier (envoyer avec un input type="file") : @RequestParam("file") MultipartFile file (cf : https://spring.io/guides/gs/uploading-files)
      */
+    @RolesAllowed("admin") // Method-Level Security : Accès à la méthode uniquement pour les utilisateurs connectes avec le role "admin"
     @PostMapping
     @Operation(summary = "créer un film")
     public Film postFilm(@Valid @RequestBody Film film){
@@ -54,6 +57,7 @@ public class FilmRestController {
      * @PathVariable : permet de récupérer en argument une variable de l'URL de la requête HTTP
      * Ne pas oublier d'ajouter dans l'url de mappin comment retrouver cette variable : ici "/{id}"
      */
+    @RolesAllowed("admin") // Method-Level Security : Accès à la méthode uniquement pour les utilisateurs connectes avec le role "admin"
     @DeleteMapping("/{id}")
     @Operation(summary = "supprimer un film")
     public void deleteFilm(@PathVariable Long id){
@@ -63,6 +67,7 @@ public class FilmRestController {
     /**
      * On peut combiner PathVariable et RequestBody
      */
+    @RolesAllowed("admin") // Method-Level Security : Accès à la méthode uniquement pour les utilisateurs connectes avec le role "admin"
     @PutMapping("/{id}")
     @Operation(summary = "modifier un film")
     public void postFilm(@PathVariable Long id, @RequestBody Film film){

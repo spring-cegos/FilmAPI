@@ -2,12 +2,14 @@ package fr.cegos.filmapi.controller;
 
 
 import fr.cegos.filmapi.bo.Avis;
+import fr.cegos.filmapi.security.Utilisateur;
 import fr.cegos.filmapi.service.AvisService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -51,30 +53,41 @@ public class AvisRestController {
      * Si on ouble cette annotation, on va avoir un objet Film vide
      * Si besoin de récupérer un fichier (envoyer avec un input type="file") : @RequestParam("file") MultipartFile file (cf : https://spring.io/guides/gs/uploading-files)
      */
+    @PreAuthorize("isAuthenticated()") // Method-Level Security : Accès à la méthode uniquement pour les utilisateurs connectes
     @PostMapping
     @Operation(summary = "ajouter un avis")
-    public void postAvis(@PathVariable Long filmId, @Valid  @RequestBody Avis avis){
-        // en attendant d'avoir l'authentification, on a un membre null
-        avisService.saveAvis(filmId, avis);
+    public void postAvis(@PathVariable Long filmId, @Valid  @RequestBody Avis avis, Authentication authentication){
+
+        // je récupère l'utilisateur connecté pour mettre son nom dans l'avis
+        Utilisateur utilisateurConnecte = (Utilisateur) authentication.getPrincipal();
+        avis.setNom(utilisateurConnecte.getMembre().getUsername());
+
+        avisService.saveAvis(filmId, avis, utilisateurConnecte.getMembre());
     }
 
     /**
      * @PathVariable : permet de récupérer en argument une variable de l'URL de la requête HTTP
      * Ne pas oublier d'ajouter dans l'url de mappin comment retrouver cette variable : ici "/{id}"
      */
+    @PreAuthorize("isAuthenticated()") // Method-Level Security : Accès à la méthode uniquement pour les utilisateurs connectes
     @DeleteMapping("/{id}")
     @Operation(summary = "supprimer un avis")
-    public void deleteFilm(@PathVariable Long id){
-        avisService.deleteAvis(id);
+    public void deleteFilm(@PathVariable Long id, Authentication authentication){
+        // je récupère l'utilisateur connecté pour l'ajouter en argument de l'appel au service (pour validation)
+        Utilisateur utilisateurConnecte = (Utilisateur) authentication.getPrincipal();
+        avisService.deleteAvis(id, utilisateurConnecte.getMembre());
     }
 
     /**
      * On peut combiner PathVariable et RequestBody
      */
+    @PreAuthorize("isAuthenticated()") // Method-Level Security : Accès à la méthode uniquement pour les utilisateurs connectes
     @PutMapping("/{id}")
     @Operation(summary = "modifier un avis")
-    public void postFilm(@PathVariable Long filmId, @PathVariable Long id, @RequestBody Avis avis){
+    public void postFilm(@PathVariable Long filmId, @PathVariable Long id, @RequestBody Avis avis, Authentication authentication){
+        // je récupère l'utilisateur connecté pour l'ajouter en argument de l'appel au service (pour validation)
+        Utilisateur utilisateurConnecte = (Utilisateur) authentication.getPrincipal();
         avis.setId(id);
-        avisService.saveAvis(filmId,avis);
+        avisService.saveAvis(filmId,avis, utilisateurConnecte.getMembre());
     }
 }

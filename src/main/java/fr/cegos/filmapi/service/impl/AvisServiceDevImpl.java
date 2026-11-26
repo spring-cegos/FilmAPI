@@ -4,6 +4,7 @@ package fr.cegos.filmapi.service.impl;
 
 import fr.cegos.filmapi.bo.Avis;
 import fr.cegos.filmapi.bo.Film;
+import fr.cegos.filmapi.bo.Membre;
 import fr.cegos.filmapi.service.AvisService;
 import fr.cegos.filmapi.service.FilmService;
 import lombok.AllArgsConstructor;
@@ -39,7 +40,7 @@ public class AvisServiceDevImpl implements AvisService {
     }
 
     @Override
-    public void saveAvis(Long idFilm, Avis avis) {
+    public void saveAvis(Long idFilm, Avis avis, Membre membre) {
         // je met la date du jour à l'avis
         avis.setDate(LocalDate.now());
 
@@ -57,7 +58,7 @@ public class AvisServiceDevImpl implements AvisService {
     }
 
     @Override
-    public void deleteAvis(Long id) {
+    public void deleteAvis(Long id, Membre membre) {
         for (int i = 0; i < listeAvis.size(); i++) {
             if (listeAvis.get(i).getId().equals(id)) {
                 listeAvis.remove(i);
